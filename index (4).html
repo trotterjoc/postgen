@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Post Gen — LinkedIn Content, Done for You</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy:    #0c1220;
+      --navy2:   #111c2e;
+      --blue:    #1A56DB;
+      --blue-l:  #3b82f6;
+      --teal:    #0D9488;
+      --yellow:  #FBBF24;
+      --white:   #ffffff;
+      --gray:    #8b95a5;
+      --gray-l:  #d1d5db;
+      --red-dim: #f87171;
+      --green:   #34d399;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--navy);
+      color: var(--white);
+      line-height: 1.65;
+      overflow-x: hidden;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1rem 2rem;
+      background: rgba(12,18,32,0.9);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+    }
+
+    .logo {
+      display: flex; align-items: center; gap: 0.5rem;
+      font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.15rem;
+      color: var(--white); text-decoration: none;
+    }
+
+    .logo svg { width: 28px; height: 28px; }
+
+    .pill {
+      font-family: 'Inter'; font-size: 0.6rem; font-weight: 600;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--yellow); background: rgba(251,191,36,0.1);
+      border: 1px solid rgba(251,191,36,0.2);
+      border-radius: 999px; padding: 0.12rem 0.55rem; margin-left: 0.2rem;
+    }
+
+    nav .cta-s {
+      background: var(--blue); color: var(--white); text-decoration: none;
+      font-size: 0.82rem; font-weight: 600; padding: 0.5rem 1.1rem;
+      border-radius: 6px; transition: background 0.2s;
+    }
+    nav .cta-s:hover { background: var(--blue-l); }
+
+    /* UTILITIES */
+    .container { max-width: 860px; margin: 0 auto; padding: 0 1.5rem; }
+    section { padding: 5rem 0; }
+
+    .label {
+      font-size: 0.7rem; font-weight: 600; letter-spacing: 0.13em;
+      text-transform: uppercase; color: var(--teal); margin-bottom: 0.75rem;
+    }
+
+    h1 {
+      font-family: 'Syne'; font-weight: 800;
+      font-size: clamp(2.2rem, 5.5vw, 3.6rem);
+      line-height: 1.08; letter-spacing: -0.03em;
+    }
+
+    h2 {
+      font-family: 'Syne'; font-weight: 700;
+      font-size: clamp(1.6rem, 3.5vw, 2.3rem);
+      line-height: 1.15; letter-spacing: -0.02em;
+    }
+
+    .sub { color: var(--gray); font-size: 1.05rem; line-height: 1.7; max-width: 520px; }
+    .sub strong { color: var(--white); font-weight: 500; }
+
+    .btn {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      background: var(--blue); color: var(--white); font-weight: 600;
+      font-size: 0.95rem; padding: 0.8rem 1.75rem; border-radius: 8px;
+      text-decoration: none; border: none; cursor: pointer;
+      transition: background 0.2s, transform 0.15s;
+    }
+    .btn:hover { background: var(--blue-l); transform: translateY(-1px); }
+    .btn svg { flex-shrink: 0; }
+
+    /* ═══════ HERO ═══════ */
+    #hero {
+      min-height: 100vh; display: flex; align-items: center;
+      justify-content: center; text-align: center;
+      padding: 7rem 1.5rem 4rem; position: relative;
+    }
+
+    .glow {
+      position: absolute; width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(26,86,219,0.15) 0%, transparent 70%);
+      top: 45%; left: 50%; transform: translate(-50%, -50%); pointer-events: none;
+    }
+
+    #hero h1 { margin-bottom: 1.25rem; }
+    #hero .sub { margin: 0 auto 2.25rem; text-align: center; }
+
+    .spark {
+      color: var(--yellow); display: inline-block;
+      animation: glow 2.5s ease-in-out infinite;
+    }
+    @keyframes glow {
+      0%, 100% { text-shadow: 0 0 0 transparent; }
+      50%       { text-shadow: 0 0 22px rgba(251,191,36,0.5); }
+    }
+
+    .hero-note {
+      font-size: 0.8rem; color: var(--gray); margin-top: 1rem;
+    }
+
+    /* ═══════ WITHOUT / WITH ═══════ */
+    #contrast { background: var(--navy2); }
+
+    .contrast-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;
+      margin-top: 2.5rem;
+    }
+    @media (max-width: 640px) { .contrast-grid { grid-template-columns: 1fr; } }
+
+    .contrast-col {
+      border-radius: 14px; padding: 2rem;
+      border: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .col-without {
+      background: rgba(248,113,113,0.04);
+      border-color: rgba(248,113,113,0.12);
+    }
+
+    .col-with {
+      background: rgba(52,211,153,0.04);
+      border-color: rgba(52,211,153,0.12);
+    }
+
+    .contrast-col h3 {
+      font-family: 'Syne'; font-size: 1rem; font-weight: 700;
+      margin-bottom: 1.25rem; display: flex; align-items: center; gap: 0.5rem;
+    }
+
+    .col-without h3 { color: var(--red-dim); }
+    .col-with h3 { color: var(--green); }
+
+    .contrast-col ul {
+      list-style: none; display: flex; flex-direction: column; gap: 0.85rem;
+    }
+
+    .contrast-col li {
+      font-size: 0.9rem; color: var(--gray-l); line-height: 1.55;
+      display: flex; gap: 0.6rem; align-items: flex-start;
+    }
+
+    .contrast-col li span { flex-shrink: 0; margin-top: 2px; }
+    .col-without li span { color: var(--red-dim); }
+    .col-with li span { color: var(--green); }
+
+    /* ═══════ FUTURE STAKES ═══════ */
+    #stakes { text-align: center; }
+
+    .timeline {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;
+      margin-top: 2.5rem; text-align: left;
+    }
+    @media (max-width: 640px) { .timeline { grid-template-columns: 1fr; } }
+
+    .timeline-card {
+      border-radius: 14px; padding: 2rem;
+      border: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .timeline-card.bad {
+      background: rgba(248,113,113,0.03);
+      border-color: rgba(248,113,113,0.1);
+    }
+    .timeline-card.good {
+      background: rgba(52,211,153,0.03);
+      border-color: rgba(52,211,153,0.1);
+    }
+
+    .timeline-card .when {
+      font-size: 0.7rem; font-weight: 600; letter-spacing: 0.12em;
+      text-transform: uppercase; margin-bottom: 0.75rem;
+    }
+    .timeline-card.bad .when { color: var(--red-dim); }
+    .timeline-card.good .when { color: var(--green); }
+
+    .timeline-card h3 {
+      font-family: 'Syne'; font-size: 1.1rem; font-weight: 700;
+      margin-bottom: 0.75rem; line-height: 1.3;
+    }
+
+    .timeline-card p {
+      font-size: 0.88rem; color: var(--gray); line-height: 1.65;
+    }
+
+    /* ═══════ HOW ═══════ */
+    #how { background: var(--navy2); }
+
+    .how-list {
+      display: flex; flex-direction: column; gap: 1.75rem;
+      margin-top: 2.5rem; max-width: 560px;
+    }
+
+    .how-item { display: flex; gap: 1.25rem; align-items: flex-start; }
+
+    .how-num {
+      font-family: 'Syne'; font-weight: 800; font-size: 1.4rem;
+      color: var(--blue); flex-shrink: 0; width: 2rem; text-align: right;
+      line-height: 1.4;
+    }
+
+    .how-item h3 {
+      font-family: 'Syne'; font-size: 0.95rem; font-weight: 700;
+      margin-bottom: 0.25rem;
+    }
+
+    .how-item p { font-size: 0.85rem; color: var(--gray); }
+
+    /* ═══════ OFFER ═══════ */
+    #offer { text-align: center; }
+
+    .offer-card {
+      max-width: 520px; margin: 2.5rem auto 0; text-align: left;
+      background: rgba(26,86,219,0.06);
+      border: 1px solid rgba(26,86,219,0.25);
+      border-radius: 16px; padding: 2.25rem; position: relative;
+    }
+
+    .offer-badge {
+      position: absolute; top: -0.7rem; left: 50%; transform: translateX(-50%);
+      background: var(--blue); color: var(--white);
+      font-size: 0.65rem; font-weight: 700; letter-spacing: 0.1em;
+      text-transform: uppercase; padding: 0.2rem 0.8rem; border-radius: 999px;
+      white-space: nowrap;
+    }
+
+    .offer-price-row {
+      display: flex; align-items: baseline; gap: 0.85rem;
+      margin: 0.5rem 0 0.35rem;
+    }
+
+    .offer-price {
+      font-family: 'Syne'; font-size: 2.8rem; font-weight: 800;
+      letter-spacing: -0.04em;
+    }
+
+    .offer-strike {
+      font-size: 1rem; color: var(--gray); text-decoration: line-through;
+    }
+
+    .offer-per { font-size: 0.9rem; color: var(--gray); }
+
+    .offer-note {
+      font-size: 0.85rem; color: var(--gray); margin-bottom: 1.5rem; line-height: 1.6;
+    }
+
+    .offer-divider { height: 1px; background: rgba(255,255,255,0.08); margin: 1.5rem 0; }
+
+    .offer-features {
+      list-style: none; display: flex; flex-direction: column; gap: 0.6rem;
+      margin-bottom: 2rem;
+    }
+
+    .offer-features li {
+      font-size: 0.88rem; color: var(--gray-l); display: flex;
+      gap: 0.6rem; align-items: flex-start; line-height: 1.5;
+    }
+
+    .offer-features li .ck { color: var(--teal); flex-shrink: 0; }
+
+    .offer-card .btn { width: 100%; justify-content: center; font-size: 1rem; padding: 0.9rem; }
+
+    .offer-fine {
+      text-align: center; font-size: 0.78rem; color: var(--gray);
+      margin-top: 0.85rem;
+    }
+
+    /* ═══════ FOOTER ═══════ */
+    footer {
+      border-top: 1px solid rgba(255,255,255,0.05);
+      padding: 2rem 1.5rem;
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 1rem;
+    }
+    footer .logo { font-size: 1rem; }
+    footer p { font-size: 0.75rem; color: var(--gray); }
+
+    @media (max-width: 600px) {
+      nav { padding: 0.9rem 1.25rem; }
+      .offer-card { padding: 1.75rem; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .spark { animation: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#hero" class="logo">
+    <svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect width="28" height="28" rx="7" fill="#1A56DB"/>
+      <path d="M7 9c0-1 .8-1.8 1.8-1.8H19.2c1 0 1.8.8 1.8 1.8v7.5c0 1-.8 1.8-1.8 1.8H15l-3.2 3.2v-3.2H8.8c-1 0-1.8-.8-1.8-1.8V9z" fill="#fff" fill-opacity=".15" stroke="#fff" stroke-width="1.3"/>
+      <path d="M15.5 9.5L12.5 14h3.2L13 19l5.2-6H15.5L17.5 9.5H15.5z" fill="#FBBF24"/>
+      <circle cx="22" cy="6" r="1.2" fill="#0D9488"/>
+    </svg>
+    Post Gen
+    <span class="pill">Powered by AI</span>
+  </a>
+  <a href="https://tally.so/r/J9Gjdr" class="cta-s">Apply now</a>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="glow"></div>
+  <div class="container" style="position:relative;">
+    <p class="label">Done-for-you LinkedIn content</p>
+    <h1>Stop being your industry's<br>best-kept <span class="spark">secret.</span></h1>
+    <p class="sub">We write and post LinkedIn content <strong>in your voice</strong> so you can stop staring at blank screens and start showing up where your next client is already looking.</p>
+    <a href="https://tally.so/r/J9Gjdr" class="btn">
+      Join the founding cohort
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </a>
+    <p class="hero-note">For consultants, coaches, fractional execs, and thought leaders.</p>
+  </div>
+</section>
+
+<!-- WITHOUT vs WITH -->
+<section id="contrast">
+  <div class="container">
+    <p class="label" style="text-align:center;">The reality check</p>
+    <h2 style="text-align:center;">What happens right now — with<br>and without Post Gen.</h2>
+
+    <div class="contrast-grid">
+
+      <div class="contrast-col col-without">
+        <h3><span>✕</span> Without Post Gen</h3>
+        <ul>
+          <li><span>✕</span> You post once, maybe twice, then go quiet for weeks</li>
+          <li><span>✕</span> Potential clients search you on LinkedIn and find a ghost town</li>
+          <li><span>✕</span> You spend 3+ hours a week staring at a blank doc, then give up</li>
+          <li><span>✕</span> You try ChatGPT — the posts sound nothing like you</li>
+          <li><span>✕</span> Competitors who post consistently get found first</li>
+          <li><span>✕</span> Your expertise stays locked inside your head instead of building trust online</li>
+        </ul>
+      </div>
+
+      <div class="contrast-col col-with">
+        <h3><span>✓</span> With Post Gen</h3>
+        <ul>
+          <li><span>✓</span> 8 posts per month go out in your voice — no writing on your end</li>
+          <li><span>✓</span> Your LinkedIn looks active, credible, and full of your real thinking</li>
+          <li><span>✓</span> Those 3+ hours a week go back to billable client work</li>
+          <li><span>✓</span> Every post sounds like you sat down and wrote it yourself</li>
+          <li><span>✓</span> You show up in feeds, searches, and conversations consistently</li>
+          <li><span>✓</span> Your ideas start working for you 24/7 instead of sitting in your notebook</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- FUTURE STAKES -->
+<section id="stakes">
+  <div class="container">
+    <p class="label">Fast forward 90 days</p>
+    <h2>Two versions of your next quarter.</h2>
+    <p class="sub" style="margin: 0.75rem auto 0; text-align: center;">One where nothing changes. One where your LinkedIn finally matches your reputation.</p>
+
+    <div class="timeline">
+
+      <div class="timeline-card bad">
+        <p class="when">90 days from now — without Post Gen</p>
+        <h3>Still invisible. Still relying on referrals alone.</h3>
+        <p>Your profile looks the same as it does today. Prospects still Google you and find nothing recent. You keep telling yourself you'll "start posting soon." The pipeline stays dependent on who happens to remember your name. Every competitor who posts consistently continues to take up the space you should be in.</p>
+      </div>
+
+      <div class="timeline-card good">
+        <p class="when">90 days from now — with Post Gen</p>
+        <h3>Visible, credible, and attracting inbound.</h3>
+        <p>You have 24+ posts live — all in your voice, all demonstrating your expertise. People mention seeing your content when they reach out. Your profile is a living portfolio of your thinking, not a static resume. You're fielding DMs from people who want to work with you because they already trust what you have to say.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section id="how">
+  <div class="container">
+    <p class="label">How it works</p>
+    <h2>You talk. We write. You approve.</h2>
+
+    <div class="how-list">
+      <div class="how-item">
+        <div class="how-num">1</div>
+        <div>
+          <h3>Quick voice intake</h3>
+          <p>A short session where we learn your tone, your expertise, and what your audience cares about. This becomes your custom voice guide.</p>
+        </div>
+      </div>
+      <div class="how-item">
+        <div class="how-num">2</div>
+        <div>
+          <h3>We draft your posts</h3>
+          <p>Our AI-powered workflow creates posts in your voice — covering authority, trust, education, and conversion angles.</p>
+        </div>
+      </div>
+      <div class="how-item">
+        <div class="how-num">3</div>
+        <div>
+          <h3>You review, we refine</h3>
+          <p>Nothing goes live without your approval. Two rounds of edits per batch to get every post right.</p>
+        </div>
+      </div>
+      <div class="how-item">
+        <div class="how-num">4</div>
+        <div>
+          <h3>Your LinkedIn grows</h3>
+          <p>Consistent, on-brand content goes out while you focus on running your business.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- OFFER -->
+<section id="offer">
+  <div class="container">
+    <p class="label">Limited spots</p>
+    <h2>Join as a founding design partner.</h2>
+    <p class="sub" style="margin: 0.75rem auto 0; text-align: center;">We're inviting a small group of founding clients to get the full experience at cost. Your feedback helps us build. You get a LinkedIn presence for a fraction of what it will cost at launch.</p>
+
+    <div class="offer-card">
+      <div class="offer-badge">Founding cohort — limited spots</div>
+
+      <div class="offer-price-row">
+        <div class="offer-price">$47</div>
+        <div class="offer-strike">$297/mo</div>
+      </div>
+      <p class="offer-per">per month — covers costs while we build together</p>
+
+      <div class="offer-divider"></div>
+
+      <ul class="offer-features">
+        <li><span class="ck">✓</span> 8 posts per month, written in your voice</li>
+        <li><span class="ck">✓</span> Voice and strategy intake session</li>
+        <li><span class="ck">✓</span> AI-drafted content — you approve before anything goes live</li>
+        <li><span class="ck">✓</span> Two rounds of edits per batch</li>
+        <li><span class="ck">✓</span> Direct access to the founder</li>
+        <li><span class="ck">✓</span> Your feedback shapes the product</li>
+      </ul>
+
+      <a href="https://tally.so/r/J9Gjdr" class="btn">
+        Apply for a design partner spot
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+      <p class="offer-fine">No commitment. Just a conversation to see if it's a fit.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <a href="#hero" class="logo">
+    <svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect width="28" height="28" rx="7" fill="#1A56DB"/>
+      <path d="M7 9c0-1 .8-1.8 1.8-1.8H19.2c1 0 1.8.8 1.8 1.8v7.5c0 1-.8 1.8-1.8 1.8H15l-3.2 3.2v-3.2H8.8c-1 0-1.8-.8-1.8-1.8V9z" fill="#fff" fill-opacity=".15" stroke="#fff" stroke-width="1.3"/>
+      <path d="M15.5 9.5L12.5 14h3.2L13 19l5.2-6H15.5L17.5 9.5H15.5z" fill="#FBBF24"/>
+      <circle cx="22" cy="6" r="1.2" fill="#0D9488"/>
+    </svg>
+    Post Gen
+    <span class="pill">Powered by AI</span>
+  </a>
+  <p>&copy; 2026 Post Gen</p>
+</footer>
+
+</body>
+</html>
